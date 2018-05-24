@@ -1,15 +1,16 @@
 package by.epam.task3.composite;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class TextDataComposite implements TextDataComponent {
-    private ArrayList<TextDataComponent> components;
+    private LinkedList<TextDataComponent> components;
     private DataLevel level;
 
 
     public TextDataComposite(DataLevel level) {
         this.level = level;
-        this.components = new ArrayList<TextDataComponent>();
+        this.components = new LinkedList<>();
     }
 
     @Override
@@ -36,11 +37,11 @@ public class TextDataComposite implements TextDataComponent {
         return components.get(index);
     }
 
-    public ArrayList<TextDataComponent> getComponents() {
+    public LinkedList<TextDataComponent> getComponents() {
         return components;
     }
 
-    public void setComponents(ArrayList<TextDataComponent> components) {
+    public void setComponents(LinkedList<TextDataComponent> components) {
         this.components = components;
     }
 

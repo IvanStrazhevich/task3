@@ -7,15 +7,14 @@ import org.apache.logging.log4j.Logger;
 
 public class ParserToChars implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
-    private TextDataComponent textDataComponent;
 
     @Override
     public TextDataComponent parseText(String data) {
-        textDataComponent = new TextDataComposite(DataLevel.CHAR);
+        TextDataComponent textDataComponent = new TextDataComposite(DataLevel.CHAR);
         char[] chars = data.toString().toCharArray();
         for (char element : chars
                 ) {
-            this.textDataComponent.add(new TextDataLeaf(LeafType.TEXT, element));
+            textDataComponent.add(new TextDataLeaf(LeafType.TEXT, element));
         }
         logger.info(textDataComponent);
         return textDataComponent;

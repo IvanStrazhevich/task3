@@ -16,7 +16,4 @@ public class ExtendedException extends Exception {
         super(cause);
     }
 
-    public ExtendedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
