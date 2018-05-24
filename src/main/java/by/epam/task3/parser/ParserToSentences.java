@@ -6,21 +6,18 @@ import by.epam.task3.composite.TextDataComposite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 //joining() посмореть
 public class ParserToSentences implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
     private SourceParsable nextParser = new ParserToLexemes();
-    private static final String SENTENCE_REG = "(.*[\\p{Punct}[\\.\\!\\?]]*\\s*)";
+    private static final String SENTENCE_REG = "(?<=[.?!…])";
 
     @Override
     public TextDataComponent parseText(String data) {
+        String[] sentences = data.split(SENTENCE_REG);
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.SENTENCE);
-        Pattern patternSentence = Pattern.compile(SENTENCE_REG);
-        Matcher matcherSentence = patternSentence.matcher(data);
-        while (matcherSentence.find()) {
-            String sentence = matcherSentence.group();
+        for (String sentence : sentences
+                ) {
             logger.info(sentence);
             textDataComponent.add(nextParser.parseText(sentence));
         }

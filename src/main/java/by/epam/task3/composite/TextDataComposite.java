@@ -2,6 +2,7 @@ package by.epam.task3.composite;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class TextDataComposite implements TextDataComponent {
     private LinkedList<TextDataComponent> components;
@@ -15,11 +16,23 @@ public class TextDataComposite implements TextDataComponent {
 
     @Override
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        ArrayList<String> strings = new ArrayList<>();
+        if(level == DataLevel.LEXEM){
+
         for (TextDataComponent textDataComponent : components) {
-            stringBuffer.append(textDataComponent.toString());
+            strings.add(textDataComponent.toString());
         }
-        return stringBuffer.toString();
+        return strings.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(" "));
+        }else{
+            for (TextDataComponent textDataComponent : components) {
+                strings.add(textDataComponent.toString());
+            }
+        return strings.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining());
+        }
     }
 
     @Override

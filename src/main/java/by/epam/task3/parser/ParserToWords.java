@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class ParserToWords implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
     private SourceParsable nextParser = new ParserToChars();
-    private static final String WORD = "((\\p{Punct})*\\w*(\\p{Punct})*\\s*)";
+    private static final String WORD = "((\\p{Punct})*\\w*(\\p{Punct})*[…]*\\s*)";
 
     @Override
     public TextDataComponent parseText(String data) {

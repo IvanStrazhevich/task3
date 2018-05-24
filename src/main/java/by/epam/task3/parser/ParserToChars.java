@@ -11,7 +11,7 @@ public class ParserToChars implements SourceParsable {
     @Override
     public TextDataComponent parseText(String data) {
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.CHAR);
-        char[] chars = data.toString().toCharArray();
+        char[] chars = data.toCharArray();
         for (char element : chars
                 ) {
             textDataComponent.add(new TextDataLeaf(LeafType.TEXT, element));

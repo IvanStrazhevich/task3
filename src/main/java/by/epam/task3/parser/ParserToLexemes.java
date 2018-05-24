@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ParserToLexemes implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
-    private static final String LEXEME_DIVIDER = "(?<=(.\\s))";
+    private static final String LEXEME_DIVIDER = "(?>\\s)";
     private static final String NOT_WORD = "(\\p{Punct}+?\\d+?)+?\\s*";
     private SourceParsable nextParser = new ParserToWords();
     private LexemeInterpreter interpreter = new LexemeInterpreter();
@@ -23,13 +23,15 @@ public class ParserToLexemes implements SourceParsable {
         Pattern pattern = Pattern.compile(NOT_WORD);
         for (String lexeme : lexemes
                 ) {
+            logger.info("s" + lexeme + "s");
             Matcher matcher = pattern.matcher(lexeme);
             if (matcher.matches()) {
-                char[] chars = matcher.group().toCharArray();
-                for (char math : chars
-                        ) {
-                    textDataComponent.add(new TextDataLeaf(LeafType.PUNCT, math));
-                }
+                // char[] chars = matcher.group().toCharArray();
+                //for (char math : chars
+                //   ) {
+                //textDataComponent.add(new TextDataLeaf(LeafType.MATH, math));
+                //}
+                textDataComponent.add(nextParser.parseText(lexeme));
             } else {
                 textDataComponent.add(nextParser.parseText(lexeme));
             }
