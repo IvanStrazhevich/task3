@@ -23,7 +23,6 @@ public class ParserToLexemes implements SourceParsable {
         Pattern pattern = Pattern.compile(NOT_WORD);
         for (String lexeme : lexemes
                 ) {
-            logger.info("s" + lexeme + "s");
             Matcher matcher = pattern.matcher(lexeme);
             if (matcher.matches()) {
                 // char[] chars = matcher.group().toCharArray();
@@ -31,7 +30,7 @@ public class ParserToLexemes implements SourceParsable {
                 //   ) {
                 //textDataComponent.add(new TextDataLeaf(LeafType.MATH, math));
                 //}
-                textDataComponent.add(nextParser.parseText(lexeme));
+                textDataComponent.add(nextParser.parseText(lexeme)); //to add interpreter
             } else {
                 textDataComponent.add(nextParser.parseText(lexeme));
             }

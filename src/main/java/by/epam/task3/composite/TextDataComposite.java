@@ -8,7 +8,6 @@ public class TextDataComposite implements TextDataComponent {
     private LinkedList<TextDataComponent> components;
     private DataLevel level;
 
-
     public TextDataComposite(DataLevel level) {
         this.level = level;
         this.components = new LinkedList<>();
@@ -17,22 +16,32 @@ public class TextDataComposite implements TextDataComponent {
     @Override
     public String toString() {
         ArrayList<String> strings = new ArrayList<>();
-        if(level == DataLevel.LEXEM){
+        if (level == DataLevel.LEXEM) {
 
-        for (TextDataComponent textDataComponent : components) {
-            strings.add(textDataComponent.toString());
-        }
-        return strings.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(" "));
-        }else{
             for (TextDataComponent textDataComponent : components) {
                 strings.add(textDataComponent.toString());
             }
-        return strings.stream()
+            return strings.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining(" "));
+        } else {
+            for (TextDataComponent textDataComponent : components) {
+                strings.add(textDataComponent.toString());
+            }
+            return strings.stream()
                     .map(Object::toString)
                     .collect(Collectors.joining());
         }
+    }
+
+    @Override
+    public DataLevel checkLevel() {
+        return level;
+    }
+
+    @Override
+    public LinkedList<TextDataComponent> selectList() {
+        return components;
     }
 
     @Override
@@ -48,18 +57,6 @@ public class TextDataComposite implements TextDataComponent {
     @Override
     public TextDataComponent getChild(int index) {
         return components.get(index);
-    }
-
-    public LinkedList<TextDataComponent> getComponents() {
-        return components;
-    }
-
-    public void setComponents(LinkedList<TextDataComponent> components) {
-        this.components = components;
-    }
-
-    public DataLevel getLevel() {
-        return level;
     }
 
     public void setLevel(DataLevel level) {

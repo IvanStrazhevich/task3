@@ -4,9 +4,13 @@ import by.epam.task3.composite.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class ParserToChars implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
+    private static final String PUNCT = "\\p{Punct}+?";
 
     @Override
     public TextDataComponent parseText(String data) {
@@ -15,6 +19,19 @@ public class ParserToChars implements SourceParsable {
         for (char element : chars
                 ) {
             textDataComponent.add(new TextDataLeaf(LeafType.TEXT, element));
+        }
+        Pattern patternPunct = Pattern.compile(PUNCT);
+
+        for (TextDataComponent c : textDataComponent.selectList()
+                ) {
+            Matcher matcherPunct = patternPunct.matcher(c.toString());
+            while (matcherPunct.find()) {
+                TextDataLeaf leaf = (TextDataLeaf) c;
+                leaf.setLeafType(LeafType.PUNCT);
+                c = leaf;
+
+            }
+            logger.info(c.toString() +" "+ ((TextDataLeaf) c).getLeafType());
         }
         logger.info(textDataComponent);
         return textDataComponent;

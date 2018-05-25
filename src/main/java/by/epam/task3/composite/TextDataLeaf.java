@@ -1,5 +1,7 @@
 package by.epam.task3.composite;
 
+import java.util.LinkedList;
+
 public class TextDataLeaf implements TextDataComponent {
     private LeafType leafType;
     private char data;
@@ -12,6 +14,16 @@ public class TextDataLeaf implements TextDataComponent {
     @Override
     public String toString() {
         return Character.toString(data);
+    }
+
+    @Override
+    public DataLevel checkLevel() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LinkedList<TextDataComponent> selectList() {
+        throw new UnsupportedOperationException();
     }
 
 
