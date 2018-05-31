@@ -1,6 +1,7 @@
 package by.epam.task3.parser;
 
 import by.epam.task3.composite.*;
+import by.epam.task3.exception.ExtendedException;
 import by.epam.task3.interpreter.LexemeInterpreter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 public class ParserToLexemes implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
     private static final String LEXEME_DIVIDER = "(?>\\s)";
-    private static final String NOT_WORD = "(\\p{Punct}+?\\d+?)+?\\s*";
+    private static final String NOT_WORD = "(\\p{Punct}*?\\d+?\\p{Punct}*?)+?\\s*";
     private SourceParsable nextParser = new ParserToWords();
     private LexemeInterpreter interpreter = new LexemeInterpreter();
 
@@ -25,17 +26,16 @@ public class ParserToLexemes implements SourceParsable {
                 ) {
             Matcher matcher = pattern.matcher(lexeme);
             if (matcher.matches()) {
-                // char[] chars = matcher.group().toCharArray();
-                //for (char math : chars
-                //   ) {
-                //textDataComponent.add(new TextDataLeaf(LeafType.MATH, math));
-                //}
-                textDataComponent.add(nextParser.parseText(lexeme)); //to add interpreter
+                try {
+                    textDataComponent.add(nextParser.parseText(interpreter.interpret(lexeme))); //to add interpreter
+                } catch (ExtendedException e) {
+                    logger.error("Lexeme interpreter error", e);
+                }
             } else {
                 textDataComponent.add(nextParser.parseText(lexeme));
             }
         }
-        logger.info(textDataComponent);
+        logger.debug(textDataComponent);
         return textDataComponent;
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SourceReader<T> implements SourceReadable<ArrayList<String>> {
+public class SourceReader implements SourceReadable<ArrayList<String>> {
     private static Logger logger = LogManager.getLogger();
 
     public String readSource(String dataSource) throws ExtendedException {

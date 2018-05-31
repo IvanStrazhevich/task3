@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ParserToChars implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
-    private static final String PUNCT = "\\p{Punct}+?";
+    private static final String PUNCT = "\\p{Punct}+";
 
     @Override
     public TextDataComponent parseText(String data) {
@@ -29,11 +29,10 @@ public class ParserToChars implements SourceParsable {
                 TextDataLeaf leaf = (TextDataLeaf) c;
                 leaf.setLeafType(LeafType.PUNCT);
                 c = leaf;
-
             }
-            logger.info(c.toString() +" "+ ((TextDataLeaf) c).getLeafType());
+            logger.debug(c.toString() + " " + ((TextDataLeaf) c).getLeafType());
         }
-        logger.info(textDataComponent);
+        logger.debug(textDataComponent);
         return textDataComponent;
     }
 }

@@ -2,14 +2,16 @@ package by.epam.task3.interpreter;
 
 import java.util.ArrayDeque;
 
-public class Context {
-    private ArrayDeque<Integer> values = new ArrayDeque<>();
+public class Context <T>{
+    private ArrayDeque<T> values = new ArrayDeque<>();
 
-    public Integer pop() {
+    public T pop() {
         return values.pop();
     }
 
-    public void push(Integer value) {
+    public void push(T value) {
         values.push(value);
     }
+
+
 }

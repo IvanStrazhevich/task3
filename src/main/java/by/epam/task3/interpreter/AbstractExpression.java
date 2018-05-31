@@ -1,5 +1,6 @@
 package by.epam.task3.interpreter;
 
-public interface AbstractExpression {
-    void interpret(Context context);
+@FunctionalInterface
+public interface AbstractExpression<T> {
+    void interpret(Context<T> c);
 }

@@ -23,7 +23,7 @@ public class ParserToWords implements SourceParsable {
                 String word = matcherWord.group();
                 textDataComponent.add(nextParser.parseText(word));
         }
-        logger.info(textDataComponent);
+        logger.debug(textDataComponent);
         return textDataComponent;
     }
 }

@@ -6,7 +6,6 @@ import by.epam.task3.composite.TextDataComposite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//joining() посмореть
 public class ParserToSentences implements SourceParsable {
     private static Logger logger = LogManager.getLogger();
     private SourceParsable nextParser = new ParserToLexemes();
@@ -18,10 +17,10 @@ public class ParserToSentences implements SourceParsable {
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.SENTENCE);
         for (String sentence : sentences
                 ) {
-            logger.info(sentence);
+            logger.debug(sentence);
             textDataComponent.add(nextParser.parseText(sentence));
         }
-        logger.info(textDataComponent);
+        logger.debug(textDataComponent);
         return textDataComponent;
     }
 }
