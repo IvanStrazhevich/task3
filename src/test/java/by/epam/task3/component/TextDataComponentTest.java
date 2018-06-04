@@ -11,10 +11,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TextDataComponentTest {
-    SourceReader reader;
-    ParserToParagraph parser;
-    TextDataComposite textDataComponent;
-    Logger logger;
+    private SourceReader reader;
+    private ParserToParagraph parser;
+    private TextDataComposite textDataComponent;
+    private static Logger logger;
 
 
     @BeforeMethod
@@ -26,7 +26,7 @@ public class TextDataComponentTest {
     }
 
     @AfterMethod
-    public void tearDown() throws Exception {
+    public void tearDown() {
         reader = null;
         parser = null;
         textDataComponent = null;
@@ -40,7 +40,6 @@ public class TextDataComponentTest {
         logger.info("Actual after interpret:" + actual);
         logger.info("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
-
     }
 
     @Test

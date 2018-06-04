@@ -27,6 +27,7 @@ public class LexemeInterpreter {
                 ) {
             Scanner scanner = new Scanner(s);
             if (scanner.hasNextInt()) {
+                logger.debug(s);
                 expression = (c) -> c.push(scanner.nextInt());
             } else {
                 logger.debug(s);
@@ -46,8 +47,21 @@ public class LexemeInterpreter {
                     case ">>":
                         expression = (c) -> c.push(c.pop() >> c.pop());
                         break;
-                    case "<<":
-                        expression = (c) -> c.push(c.pop() << c.pop());
+                    case ">>>":                                 //ask about this strange behavior
+                        expression = (Context<Integer> c) -> {
+                            int a, b;
+                            a = c.pop();
+                            b = c.pop();
+                            c.push(b >>> a);
+                        };
+                        break;
+                    case "<<":                                  //ask about this strange behavior
+                        expression = (Context<Integer> c) -> {
+                            int a, b;
+                            a = c.pop();
+                            b = c.pop();
+                            c.push(b << a);
+                        };
                         break;
                     default:
                         throw new ExtendedException("No such symbol to interpret" + s);

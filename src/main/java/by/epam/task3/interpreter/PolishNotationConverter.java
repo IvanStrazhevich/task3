@@ -1,12 +1,15 @@
 package by.epam.task3.interpreter;
 
 import by.epam.task3.exception.ExtendedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Scanner;
 
 public class PolishNotationConverter {
+    private static Logger logger = LogManager.getLogger();
     private int checkPriority(String operation) throws ExtendedException {
         int priority = 0;
         switch (operation) {
@@ -86,6 +89,7 @@ public class PolishNotationConverter {
         if (!operation.isEmpty()) {
             output.add(operation.pop());
         }
+        logger.debug(output);
         return output;
     }
 }

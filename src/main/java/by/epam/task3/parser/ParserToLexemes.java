@@ -9,11 +9,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParserToLexemes implements SourceParsable {
+public class ParserToLexemes implements SourceParsable<String,TextDataComponent> {
     private static Logger logger = LogManager.getLogger();
     private static final String LEXEME_DIVIDER = "(?>\\s)";
     private static final String NOT_WORD = "(\\p{Punct}*?\\d+?\\p{Punct}*?)+?\\s*";
-    private SourceParsable nextParser = new ParserToWords();
+    private SourceParsable<String,TextDataComponent> nextParser = new ParserToWords();
     private LexemeInterpreter interpreter = new LexemeInterpreter();
 
 

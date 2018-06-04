@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParserToWords implements SourceParsable {
+public class ParserToWords implements SourceParsable<String,TextDataComponent> {
     private static Logger logger = LogManager.getLogger();
-    private SourceParsable nextParser = new ParserToChars();
+    private SourceParsable<String,TextDataComponent> nextParser = new ParserToChars();
     private static final String WORD = "((\\p{Punct})*\\w*(\\p{Punct})*[…]*\\s*)*";
 
     @Override
