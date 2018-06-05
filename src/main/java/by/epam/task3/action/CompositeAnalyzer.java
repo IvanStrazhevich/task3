@@ -2,28 +2,30 @@ package by.epam.task3.action;
 
 import by.epam.task3.composite.DataLevel;
 import by.epam.task3.composite.TextDataComponent;
+import by.epam.task3.parser.TextFromPunctSplitter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CompositeAnalyzer {
     private static Logger logger = LogManager.getLogger();
 
     public String sortParagraphsBySentenceLength(TextDataComponent component) {
-        StringBuffer stringBuffer = new StringBuffer();
-        component.selectList().sort((o1, o2) -> o2.selectList().size() - o1.selectList().size());
-        logger.info(stringBuffer.append(component.toString()));
-        return stringBuffer.toString();
+        return component.selectList().stream()
+                .sorted((o1, o2) -> o2.selectList().size() - o1.selectList().size())
+                .map(Object::toString)
+                .collect(Collectors.joining(" "));
     }
 
     public String sortSentencesByLexemeSize(TextDataComponent component) {
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEM)) {
-            LinkedList<TextDataComponent> temp = component.selectList();
-            logger.info(temp);
-            temp.sort((o1, o2) -> o2.toString().length() - o1.toString().length());
-            logger.info(stringBuffer.append(component.toString()));
+            return component.selectList().stream()
+                    .map(TextDataComponent::toString)
+                    .sorted((o1, o2) -> o2.length() - o1.length())
+                    .collect(Collectors.joining(" "));
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
                 stringBuffer.append(sortSentencesByLexemeSize(component.getChild(i)));
@@ -33,15 +35,19 @@ public class CompositeAnalyzer {
     }
 
     public String sortSentencesByWordSize(TextDataComponent component) {
+
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEM)) {
-            for (int i = 0; i < component.selectList().size(); i++) {
-                LinkedList<TextDataComponent> temp=new LinkedList<>();
-                temp.add(component.getChild(i));
-                logger.info(temp);
-                temp.sort((o1, o2) -> o2.toString().length() - o1.toString().length());
+            ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
+            ArrayList<String> sentenceByWordsTemp = new ArrayList<>();
+            for (TextDataComponent lexeme : temp
+                    ) {
+                sentenceByWordsTemp.addAll(TextFromPunctSplitter.splitTextFromPuncts(lexeme.toString()));
             }
-            logger.info(stringBuffer.append(component.toString()));
+            sentenceByWordsTemp.sort((o1, o2) -> o2.length() - o1.length());
+            return sentenceByWordsTemp.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining(" "));
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
                 stringBuffer.append(sortSentencesByWordSize(component.getChild(i)));

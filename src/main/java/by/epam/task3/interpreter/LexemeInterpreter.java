@@ -1,7 +1,7 @@
 package by.epam.task3.interpreter;
 
 import by.epam.task3.exception.ExtendedException;
-import by.epam.task3.parser.DigitsFromOperationSplitter;
+import by.epam.task3.parser.TextFromPunctSplitter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,20 +12,18 @@ import java.util.Scanner;
 public class LexemeInterpreter {
 
     private static Logger logger = LogManager.getLogger();
-    private AbstractExpression<Integer> expression;
     private PolishNotationConverter polishConverter = new PolishNotationConverter();
-    private DigitsFromOperationSplitter splitter = new DigitsFromOperationSplitter();
-
 
     public String interpret(String lexeme) throws ExtendedException {
         ArrayDeque<String> polish = polishConverter.changeInfixToPostfixNotation(
-                splitter.splitDigitsFromOperations(lexeme));
+                TextFromPunctSplitter.splitTextFromPuncts(lexeme));
         Context<Integer> context = new Context<>();
         logger.debug("Source lexeme: " + lexeme);
         logger.debug("Converted to polish notation: " + polish);
         for (String s : polish
                 ) {
             Scanner scanner = new Scanner(s);
+            AbstractExpression<Integer> expression;
             if (scanner.hasNextInt()) {
                 logger.debug(s);
                 expression = (c) -> c.push(scanner.nextInt());
@@ -74,9 +72,5 @@ public class LexemeInterpreter {
 
     public void setPolishConverter(PolishNotationConverter polishConverter) {
         this.polishConverter = polishConverter;
-    }
-
-    public void setSplitter(DigitsFromOperationSplitter splitter) {
-        this.splitter = splitter;
     }
 }

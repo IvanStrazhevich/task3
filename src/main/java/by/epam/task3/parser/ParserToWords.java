@@ -1,26 +1,22 @@
 package by.epam.task3.parser;
 
-import by.epam.task3.composite.DataLevel;
-import by.epam.task3.composite.TextDataComponent;
-import by.epam.task3.composite.TextDataComposite;
+import by.epam.task3.composite.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
-public class ParserToWords implements SourceParsable<String,TextDataComponent> {
+public class ParserToWords implements SourceParsable<String, TextDataComponent> {
     private static Logger logger = LogManager.getLogger();
-    private SourceParsable<String,TextDataComponent> nextParser = new ParserToChars();
-    private static final String WORD = "((\\p{Punct})*\\w*(\\p{Punct})*[…]*\\s*)*";
+    private SourceParsable<String, TextDataComponent> nextParser = new ParserToChars();
 
     @Override
     public TextDataComponent parseText(String data) {
+
+        List<String> words = TextFromPunctSplitter.splitTextFromPuncts(data);
+        logger.debug((words));
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.WORD);
-        Pattern patternWord = Pattern.compile(WORD);
-        Matcher matcherWord = patternWord.matcher(data);
-        while (matcherWord.find()) {
-                String word = matcherWord.group();
+        for (String word : words) {
                 textDataComponent.add(nextParser.parseText(word));
         }
         logger.debug(textDataComponent);

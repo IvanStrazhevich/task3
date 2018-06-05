@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class DigitsFromOperationSplitter {
+public class TextFromPunctSplitter {
     private static Logger logger = LogManager.getLogger();
-    private static final String OPERATION_DIVIDER = "(?=\\p{Punct})";
-    private static final String OPERATION = "(?<=\\p{Punct})";
+    private static final String OPERATION_DIVIDER = "(?=[…!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~)])";
+    private static final String OPERATION = "(?<=[…!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~)])";
 
-    public List<String> splitDigitsFromOperations(String lexeme) {
+    public static List<String> splitTextFromPuncts(String lexeme) {
         Pattern punctPattern = Pattern.compile(OPERATION_DIVIDER);
         List<String> list = punctPattern.splitAsStream(lexeme).collect(Collectors.toList());
         Pattern punct = Pattern.compile(OPERATION);

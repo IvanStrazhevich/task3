@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static org.testng.Assert.*;
-
 public class LexemeInterpreterTest {
     private Logger logger;
     private static LexemeInterpreter lexemeInterpreter;
@@ -20,7 +18,6 @@ public class LexemeInterpreterTest {
                 {"5|(1&2&(3|(4&(8^5|6&47)|3)|2)|1)", "5"},
                 {"(~71&(2&3|(3|(2&1>>2|2)&2)|10&2))|78", "78"},
                 {"(4^5|1&2<<(2|5>>2&71))|1200", "1201"},
-
         };
     }
 

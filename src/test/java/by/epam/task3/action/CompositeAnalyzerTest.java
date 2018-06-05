@@ -40,16 +40,16 @@ public class CompositeAnalyzerTest {
     public void testSortParagraphsBySentenceNumber() throws Exception {
         String actual = analyzer.sortParagraphsBySentenceLength(textDataComponent);
         String expected = reader.readSource("data/data.txt");
-        logger.info("Actual after interpret:" + actual);
+        logger.info("Actual sort paragraphs by sentence quantity:" + actual);
         logger.info("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
-    public void testSortSentencesByWordsQuantity() throws Exception {
+    public void testSortSentencesByLexemesSize() throws Exception {
         String actual = analyzer.sortSentencesByLexemeSize(textDataComponent);
         String expected = reader.readSource("data/data.txt");
-        logger.info("Actual after interpret:" + actual);
+        logger.info("Actual sort lexemes in sentence by length:" + actual);
         logger.info("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
@@ -58,7 +58,7 @@ public class CompositeAnalyzerTest {
     public void testSortSentencesByWordSize() throws Exception {
         String actual = analyzer.sortSentencesByWordSize(textDataComponent);
         String expected = reader.readSource("data/data.txt");
-        logger.info("Actual after interpret:" + actual);
+        logger.info("Actual sort words in sentence by length:" + actual);
         logger.info("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
