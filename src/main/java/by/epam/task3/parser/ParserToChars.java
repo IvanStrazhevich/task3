@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ParserToChars implements SourceParsable<String,TextDataComponent> {
+public class ParserToChars implements SourceParsable<String, TextDataComponent> {
     private static Logger logger = LogManager.getLogger();
     private static final String PUNCT = "\\p{Punct}+";
 
