@@ -7,9 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CompositeAnalyzer {
     private static Logger logger = LogManager.getLogger();
@@ -23,7 +21,7 @@ public class CompositeAnalyzer {
 
     public String sortSentencesByLexemeSize(TextDataComponent component) {
         StringBuffer stringBuffer = new StringBuffer();
-        if (component.checkLevel().equals(DataLevel.LEXEM)) {
+        if (component.checkLevel().equals(DataLevel.LEXEME)) {
             return component.selectList().stream()
                     .map(TextDataComponent::toString)
                     .sorted((o1, o2) -> o2.length() - o1.length())
@@ -39,7 +37,7 @@ public class CompositeAnalyzer {
     public String sortSentencesByWordSize(TextDataComponent component) {
 
         StringBuffer stringBuffer = new StringBuffer();
-        if (component.checkLevel().equals(DataLevel.LEXEM)) {
+        if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
             ArrayList<String> sentenceByWordsTemp = new ArrayList<>();
             for (TextDataComponent lexeme : temp
@@ -58,7 +56,7 @@ public class CompositeAnalyzer {
         return stringBuffer.toString();
     }
 
-    private int countAppearance(TextDataComponent textDataComponent, char symbol) {
+    private int countSymbolAppearance(TextDataComponent textDataComponent, char symbol) {
         int k = 0;
         for (TextDataComponent word : textDataComponent.selectList()
                 ) {
@@ -73,27 +71,26 @@ public class CompositeAnalyzer {
 
     public String sortLexemesBySymbolQuantity(TextDataComponent component, char symbol) {
         StringBuffer stringBuffer = new StringBuffer();
-        if (component.checkLevel().equals(DataLevel.LEXEM)) {
+        if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>();
             temp.addAll(component.selectList());
-            logger.info(temp);
+            logger.debug(temp);
             for (int i = 0; i < temp.size(); i++) {
                 TextDataComponent lexeme = temp.get(i);
-                int k = countAppearance(lexeme, symbol);
+                int k = countSymbolAppearance(lexeme, symbol);
                 Comparator<TextDataComponent> comparator;
-                comparator = Comparator.comparing(component1 -> k - CompositeAnalyzer.this.countAppearance(component1, symbol));
+                comparator = Comparator.comparing(component1 -> k - CompositeAnalyzer.this.countSymbolAppearance(component1, symbol));
                 comparator = comparator.thenComparing(Object::toString);
                 temp.sort(comparator);
-                //temp.sort((o1, o2) -> k - countAppearance(o2, symbol));
             }
-            logger.info(temp);
+            logger.debug(temp);
             return temp.stream()
                     .map(TextDataComponent::toString)
                     .collect(Collectors.joining(" "));
-
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
-               stringBuffer.append(sortLexemesBySymbolQuantity(component.getChild(i), symbol));
+
+                stringBuffer.append(sortLexemesBySymbolQuantity(component.getChild(i), symbol));
             }
         }
         return stringBuffer.toString();

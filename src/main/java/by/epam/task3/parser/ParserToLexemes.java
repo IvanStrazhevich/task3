@@ -20,7 +20,7 @@ public class ParserToLexemes implements SourceParsable<String,TextDataComponent>
     @Override
     public TextDataComponent parseText(String data) {
         String[] lexemes = data.split(LEXEME_DIVIDER);
-        TextDataComponent textDataComponent = new TextDataComposite(DataLevel.LEXEM);
+        TextDataComponent textDataComponent = new TextDataComposite(DataLevel.LEXEME);
         Pattern pattern = Pattern.compile(NOT_WORD);
         for (String lexeme : lexemes
                 ) {

@@ -2,6 +2,8 @@ package by.epam.task3.component;
 
 import by.epam.task3.composite.TextDataComposite;
 import by.epam.task3.parser.ParserToParagraph;
+import by.epam.task3.parser.ParserToText;
+import by.epam.task3.parser.SourceParsable;
 import by.epam.task3.reader.SourceReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +14,7 @@ import org.testng.annotations.Test;
 
 public class TextDataComponentTest {
     private SourceReader reader;
-    private ParserToParagraph parser;
+    private SourceParsable parser;
     private TextDataComposite textDataComponent;
     private static Logger logger;
 
@@ -21,7 +23,7 @@ public class TextDataComponentTest {
     public void setUp() throws Exception {
         logger = LogManager.getLogger();
         reader = new SourceReader();
-        parser = new ParserToParagraph();
+        parser = new ParserToText();
         textDataComponent = (TextDataComposite) parser.parseText(reader.readSource("data/data.txt"));
     }
 

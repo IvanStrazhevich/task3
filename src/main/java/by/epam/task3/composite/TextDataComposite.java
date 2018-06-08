@@ -16,7 +16,7 @@ public class TextDataComposite implements TextDataComponent {
     @Override
     public String toString() {
         ArrayList<String> strings = new ArrayList<>();
-        if (level == DataLevel.LEXEM) {
+        if (level == DataLevel.LEXEME) {
 
             for (TextDataComponent textDataComponent : components) {
                 strings.add(textDataComponent.toString());
