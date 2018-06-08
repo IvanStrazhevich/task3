@@ -16,7 +16,7 @@ public class ParserToText implements SourceParsable<String,TextDataComponent> {
         logger.debug(data);
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.TEXT);
             textDataComponent.add(nextParser.parseText(data));
-        logger.info(textDataComponent);
+        logger.debug(textDataComponent);
         return textDataComponent;
     }
 

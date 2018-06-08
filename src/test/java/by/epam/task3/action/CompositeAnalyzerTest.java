@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CompositeAnalyzerTest {
@@ -18,7 +19,6 @@ public class CompositeAnalyzerTest {
     private static Logger logger;
     private CompositeAnalyzer analyzer;
     private String expected;
-
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -41,7 +41,7 @@ public class CompositeAnalyzerTest {
     }
 
     @Test
-    public void testSortParagraphsBySentenceNumber() throws Exception {
+    public void testSortParagraphsBySentenceNumber() {
         String actual = analyzer.sortParagraphsBySentenceLength(textDataComponent);
         logger.info("Actual sort paragraphs by sentence quantity: " + actual);
         logger.debug("Source text:" + expected);
@@ -49,7 +49,7 @@ public class CompositeAnalyzerTest {
     }
 
     @Test
-    public void testSortSentencesByLexemesSize() throws Exception {
+    public void testSortSentencesByLexemesSize() {
         String actual = analyzer.sortSentencesByLexemeSize(textDataComponent);
         logger.info("Actual sort lexemes in sentence by length: " + actual);
         logger.debug("Source text:" + expected);
@@ -57,7 +57,7 @@ public class CompositeAnalyzerTest {
     }
 
     @Test
-    public void testSortSentencesByWordSize() throws Exception {
+    public void testSortSentencesByWordSize() {
         String actual = analyzer.sortSentencesByWordSize(textDataComponent);
         logger.info("Actual sort words in sentence by length: " + actual);
         logger.debug("Source text:" + expected);
@@ -65,7 +65,7 @@ public class CompositeAnalyzerTest {
     }
 
     @Test
-    public void testSortLexemesBySymbolQuantity() throws Exception {
+    public void testSortLexemesBySymbolQuantity() {
         String actual = analyzer.sortLexemesBySymbolQuantity(textDataComponent,SYMBOL);
         logger.info("Actual sort lexemas by symbol "+SYMBOL+ " appearance: " + actual);
         logger.debug("Source text:" + expected);

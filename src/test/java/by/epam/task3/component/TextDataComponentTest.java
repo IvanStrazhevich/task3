@@ -1,7 +1,6 @@
 package by.epam.task3.component;
 
 import by.epam.task3.composite.TextDataComposite;
-import by.epam.task3.parser.ParserToParagraph;
 import by.epam.task3.parser.ParserToText;
 import by.epam.task3.parser.SourceParsable;
 import by.epam.task3.reader.SourceReader;
@@ -17,6 +16,7 @@ public class TextDataComponentTest {
     private SourceParsable parser;
     private TextDataComposite textDataComponent;
     private static Logger logger;
+    private static final String SOME_TEXT = "Some text.";
 
 
     @BeforeMethod
@@ -45,14 +45,29 @@ public class TextDataComponentTest {
     }
 
     @Test
-    public void testAdd() throws Exception {
+    public void testAdd() {
+        String expected = textDataComponent.toString() + " Some text.";
+        textDataComponent.add((TextDataComposite) parser.parseText(SOME_TEXT));
+        String actual = textDataComponent.toString();
+        Assert.assertEquals(actual, expected);
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void testRemove() {
+        String expected = textDataComponent.toString();
+        logger.info("before adding" + textDataComponent);
+        textDataComponent.add((TextDataComposite) parser.parseText(SOME_TEXT));
+        logger.info("after adding" + textDataComponent);
+        textDataComponent.remove((TextDataComposite) parser.parseText(SOME_TEXT));
+        logger.info("after deleting" + textDataComponent);
+        String actual = textDataComponent.toString();
+        Assert.assertEquals(actual, expected);
     }
 
     @Test
-    public void testGetChild() throws Exception {
+    public void testGetChild(){
+        String expected = (textDataComponent.getChild(0).getChild(0).getChild(0).getChild(4).toString());
+        String actual = "It";
+        Assert.assertEquals(actual, expected);
     }
 }
