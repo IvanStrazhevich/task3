@@ -43,7 +43,13 @@ public class LexemeInterpreter {
                         expression = (c) -> c.push(c.pop() & c.pop());
                         break;
                     case ">>":
-                        expression = (c) -> c.push(c.pop() >> c.pop());
+                        expression = (Context<Integer> c) -> {
+                            int a, b;
+                            a = c.pop();
+                            b = c.pop();
+                            c.push(b >> a);
+                        };
+
                         break;
                     case ">>>":                                 //ask about this strange behavior
                         expression = (Context<Integer> c) -> {

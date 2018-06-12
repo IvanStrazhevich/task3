@@ -4,16 +4,16 @@ import java.util.LinkedList;
 
 public class TextDataLeaf implements TextDataComponent {
     private LeafType leafType;
-    private char data;
+    private char symbol;
 
-    public TextDataLeaf(LeafType leafType, char data) {
+    public TextDataLeaf(LeafType leafType, char symbol) {
         this.leafType = leafType;
-        this.data = data;
+        this.symbol = symbol;
     }
 
     @Override
     public String toString() {
-        return Character.toString(data);
+        return Character.toString(symbol);
     }
 
     @Override
@@ -51,12 +51,12 @@ public class TextDataLeaf implements TextDataComponent {
         this.leafType = leafType;
     }
 
-    public char getData() {
-        return data;
+    public char getSymbol() {
+        return symbol;
     }
 
-    public void setData(char data) {
-        this.data = data;
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 
     @Override
@@ -66,14 +66,14 @@ public class TextDataLeaf implements TextDataComponent {
 
         TextDataLeaf that = (TextDataLeaf) o;
 
-        if (data != that.data) return false;
+        if (symbol != that.symbol) return false;
         return leafType == that.leafType;
     }
 
     @Override
     public int hashCode() {
         int result = leafType != null ? leafType.hashCode() : 0;
-        result = 31 * result + (int) data;
+        result = 31 * result + (int) symbol;
         return result;
     }
 }

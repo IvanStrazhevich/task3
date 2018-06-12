@@ -13,7 +13,7 @@ public class LexemeInterpreterTest {
     public Object[][] interpretLexeme() {
         return new Object[][]{
                 {"13<<2", "52"},
-                {"3>>5", "0"},
+                {"25>>3", "3"},
                 {"~6&9|(3&4)", "9"},
                 {"5|(1&2&(3|(4&(8^5|6&47)|3)|2)|1)", "5"},
                 {"(~71&(2&3|(3|(2&1>>2|2)&2)|10&2))|78", "78"},
@@ -26,7 +26,7 @@ public class LexemeInterpreterTest {
         logger = LogManager.getLogger();
         logger.info("Results calculation:");
         logger.info(13 << 2);
-        logger.info(3 >> 5);
+        logger.info(25 >> 3);
         logger.info(~6 & 9 | (3 & 4));
         logger.info(5 | (1 & 2 & (3 | (4 & (8 ^ 5 | 6 & 47) | 3) | 2) | 1));
         logger.info((~71 & (2 & 3 | (3 | (2 & 1 >> 2 | 2) & 2) | 10 & 2)) | 78);
