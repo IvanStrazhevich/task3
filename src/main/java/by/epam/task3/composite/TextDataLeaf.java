@@ -26,11 +26,9 @@ public class TextDataLeaf implements TextDataComponent {
         throw new UnsupportedOperationException();
     }
 
-
     @Override
     public void add(TextDataComponent dataComponent) {
         throw new UnsupportedOperationException();
-
     }
 
     @Override
@@ -75,5 +73,10 @@ public class TextDataLeaf implements TextDataComponent {
         int result = leafType != null ? leafType.hashCode() : 0;
         result = 31 * result + (int) symbol;
         return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.toString().compareTo(o.toString());
     }
 }

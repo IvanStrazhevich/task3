@@ -1,6 +1,6 @@
 package by.epam.task3.interpreter;
 
-import by.epam.task3.exception.ExtendedException;
+import by.epam.task3.exception.CompositeHandleException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class PolishNotationConverter {
     private static Logger logger = LogManager.getLogger();
-    private int checkPriority(String operation) throws ExtendedException {
+    private int checkPriority(String operation) throws CompositeHandleException {
         int priority = 0;
         switch (operation) {
             case "(":
@@ -48,12 +48,12 @@ public class PolishNotationConverter {
                 priority = 7;
                 break;
             default:
-                throw new ExtendedException("UnknownElement in string " + "\"" + operation + "\"");
+                throw new CompositeHandleException("UnknownElement in string " + "\"" + operation + "\"");
         }
         return priority;
     }
 
-    public ArrayDeque<String> changeInfixToPostfixNotation(List<String> list) throws ExtendedException {
+    public ArrayDeque<String> changeInfixToPostfixNotation(List<String> list) throws CompositeHandleException {
         ArrayDeque<String> output = new ArrayDeque<>();
         ArrayDeque<String> operation = new ArrayDeque<>();
 

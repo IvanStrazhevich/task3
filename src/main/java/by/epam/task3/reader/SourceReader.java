@@ -1,6 +1,6 @@
 package by.epam.task3.reader;
 
-import by.epam.task3.exception.ExtendedException;
+import by.epam.task3.exception.CompositeHandleException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class SourceReader implements SourceReadable<ArrayList<String>> {
     private static Logger logger = LogManager.getLogger();
 
-    public String readSource(String dataSource) throws ExtendedException {
+    public String readSource(String dataSource) throws CompositeHandleException {
         StringBuffer stringBuffer = new StringBuffer();
         ArrayList<String> compositeDataList = new ArrayList<>();
         if (dataSource != null) {
@@ -23,7 +23,7 @@ public class SourceReader implements SourceReadable<ArrayList<String>> {
             try (Stream<String> lines = Files.lines(path)) {
                 compositeDataList = (ArrayList) lines.collect(Collectors.toList());
             } catch (IOException e) {
-                throw new ExtendedException(" Source file problem", e);
+                throw new CompositeHandleException(" Source file problem", e);
             }
             logger.debug(compositeDataList + " Source reader result");
 
@@ -32,7 +32,7 @@ public class SourceReader implements SourceReadable<ArrayList<String>> {
                 stringBuffer.append(line);
             }
         } else {
-            throw new ExtendedException("Null data source");
+            throw new CompositeHandleException("Null data source");
         }
         return stringBuffer.toString();
     }

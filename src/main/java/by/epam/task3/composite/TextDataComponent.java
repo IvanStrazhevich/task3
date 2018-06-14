@@ -2,10 +2,7 @@ package by.epam.task3.composite;
 
 import java.util.LinkedList;
 
-public interface TextDataComponent {
-    String toString();
-
-    DataLevel checkLevel();
+public interface TextDataComponent extends Comparable{
 
     LinkedList<TextDataComponent> selectList();
 
@@ -14,4 +11,10 @@ public interface TextDataComponent {
     void remove(TextDataComponent dataComponent);
 
     TextDataComponent getChild(int index);
+
+    DataLevel checkLevel();
+
+    String toString();
+
+
 }

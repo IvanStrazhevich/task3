@@ -18,7 +18,7 @@ public class TextFromPunctSplitter {
         List<String> list = punctPattern.splitAsStream(lexeme).collect(Collectors.toList());
         Pattern punct = Pattern.compile(OPERATION);
         logger.debug(list);
-        List<String> temp = new ArrayList<>();
+        ArrayList<String> temp = new ArrayList<>();
         for (String element : list) {
             temp.addAll(punct.splitAsStream(element).collect(Collectors.toList()));
         }

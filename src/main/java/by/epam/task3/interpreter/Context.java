@@ -2,7 +2,7 @@ package by.epam.task3.interpreter;
 
 import java.util.ArrayDeque;
 
-public class Context <T>{
+public class Context<T> {
     private ArrayDeque<T> values = new ArrayDeque<>();
 
     public T pop() {

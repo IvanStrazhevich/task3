@@ -1,6 +1,6 @@
 package by.epam.task3.interpreter;
 
-import by.epam.task3.exception.ExtendedException;
+import by.epam.task3.exception.CompositeHandleException;
 import by.epam.task3.parser.TextFromPunctSplitter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ public class LexemeInterpreter {
     private static Logger logger = LogManager.getLogger();
     private PolishNotationConverter polishConverter = new PolishNotationConverter();
 
-    public String interpret(String lexeme) throws ExtendedException {
+    public String interpret(String lexeme) throws CompositeHandleException {
         ArrayDeque<String> polish = polishConverter.changeInfixToPostfixNotation(
                 TextFromPunctSplitter.splitTextFromPuncts(lexeme));
         Context<Integer> context = new Context<>();
@@ -68,7 +68,7 @@ public class LexemeInterpreter {
                         };
                         break;
                     default:
-                        throw new ExtendedException("No such symbol to interpret" + s);
+                        throw new CompositeHandleException("No such symbol to interpret" + s);
                 }
             }
             expression.interpret(context);

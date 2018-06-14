@@ -81,4 +81,9 @@ public class TextDataComposite implements TextDataComponent {
         result = 31 * result + (level != null ? level.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.toString().compareTo(o.toString());
+    }
 }

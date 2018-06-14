@@ -95,5 +95,45 @@ public class CompositeAnalyzer {
         }
         return stringBuffer.toString();
     }
+
+    private TreeMap<TextDataComponent, Integer> createSymbolInLexemesMap(TextDataComponent component, char symbol) {
+        TreeMap<TextDataComponent, Integer> textMap = new TreeMap<>();
+        if (component.checkLevel().equals(DataLevel.LEXEME)) {
+            ArrayList<TextDataComponent> temp = new ArrayList<>();
+            temp.addAll(component.selectList());
+            logger.debug(temp);
+            int k = 0;
+            TreeMap<TextDataComponent, Integer> lexemeMap = new TreeMap<>();
+            for (TextDataComponent lexeme : temp) {
+                k = countSymbolAppearance(lexeme, symbol);
+                lexemeMap.put(lexeme, k);
+            }
+            logger.debug(temp);
+            return lexemeMap;
+        } else {
+            for (int i = 0; i < component.selectList().size(); i++) {
+                textMap.putAll(createSymbolInLexemesMap(component.getChild(i), symbol));
+            }
+        }
+        return textMap;
+    }
+
+    public String sortTextLexemesBySymbolQuantityThenAlfabetically(TextDataComponent component, char symbol) {
+        StringBuffer stringBuffer = new StringBuffer();
+        TreeMap<TextDataComponent, Integer> lexemeMap = createSymbolInLexemesMap(component, symbol);
+        NavigableMap<TextDataComponent,Integer> decendingMap = lexemeMap.descendingMap();
+        LinkedList<TextDataComponent> keyList = new LinkedList<>();
+        decendingMap.forEach((TextDataComponent k,Integer v)->{
+           keyList.add(k);
+        });
+        keyList.sort(Comparator.comparing(decendingMap::get).thenComparing(Comparator.comparing(Object::toString)));
+        Collections.reverse(keyList);
+        for (TextDataComponent lexeme: keyList
+             ) {
+            stringBuffer.append(lexeme + " ");
+        }
+        logger.info(stringBuffer);
+        return stringBuffer.toString();
+    }
 }
 

@@ -8,11 +8,10 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CompositeAnalyzerTest {
-    private static final char SYMBOL = 's';
+    private static final char SYMBOL = 'e';
     private SourceReader reader;
     private ParserToParagraph parser;
     private TextDataComposite textDataComponent;
@@ -66,8 +65,16 @@ public class CompositeAnalyzerTest {
 
     @Test
     public void testSortLexemesBySymbolQuantity() {
-        String actual = analyzer.sortLexemesBySymbolQuantity(textDataComponent,SYMBOL);
-        logger.info("Actual sort lexemas by symbol "+SYMBOL+ " appearance: " + actual);
+        String actual = analyzer.sortLexemesBySymbolQuantity(textDataComponent, SYMBOL);
+        logger.info("Actual sort lexemas in sentences by symbol " + SYMBOL + " appearance: " + actual);
+        logger.debug("Source text:" + expected);
+        Assert.assertNotEquals(actual, expected);
+    }
+
+    @Test
+    public void testSortUsingMapLexemesBySymbolQuantity() {
+        String actual = analyzer.sortTextLexemesBySymbolQuantityThenAlfabetically(textDataComponent, SYMBOL);
+        logger.info("Actual sort text lexemas by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }

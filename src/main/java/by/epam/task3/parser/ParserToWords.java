@@ -12,7 +12,6 @@ public class ParserToWords implements SourceParsable<String, TextDataComponent> 
 
     @Override
     public TextDataComponent parseText(String data) {
-
         List<String> words = TextFromPunctSplitter.splitTextFromPuncts(data);
         logger.debug((words));
         TextDataComponent textDataComponent = new TextDataComposite(DataLevel.WORD);
