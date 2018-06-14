@@ -65,16 +65,16 @@ public class CompositeAnalyzerTest {
 
     @Test
     public void testSortLexemesBySymbolQuantity() {
-        String actual = analyzer.sortLexemesBySymbolQuantity(textDataComponent, SYMBOL);
-        logger.info("Actual sort lexemas in sentences by symbol " + SYMBOL + " appearance: " + actual);
+        String actual = analyzer.sortLexemesInSentencesBySymbolQuantity(textDataComponent, SYMBOL);
+        logger.info("Actual sort lexemes in sentences by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
     public void testSortUsingMapLexemesBySymbolQuantity() {
-        String actual = analyzer.sortTextLexemesBySymbolQuantityThenAlfabetically(textDataComponent, SYMBOL);
-        logger.info("Actual sort text lexemas by symbol " + SYMBOL + " appearance: " + actual);
+        String actual = analyzer.sortTextLexemesBySymbolQuantityThenAlphabetically(textDataComponent, SYMBOL);
+        logger.info("Actual sort text lexemes by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }

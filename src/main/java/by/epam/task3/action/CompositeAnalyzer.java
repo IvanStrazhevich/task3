@@ -35,7 +35,6 @@ public class CompositeAnalyzer {
     }
 
     public String sortSentencesByWordSize(TextDataComponent component) {
-
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
@@ -56,30 +55,26 @@ public class CompositeAnalyzer {
         return stringBuffer.toString();
     }
 
-    private int countSymbolAppearance(TextDataComponent textDataComponent, char symbol) {
-        int k = 0;
-        for (TextDataComponent word : textDataComponent.selectList()
-                ) {
-            for (TextDataComponent leaf : word.selectList()) {
-                if (leaf.toString().charAt(0) == (symbol)) {
-                    k++;
-                }
-            }
-        }
-        return k;
+    private int countSymbolAppearance(TextDataComponent lexeme, char symbol) {
+        return lexeme.selectList().stream()
+                .mapToInt(word -> (int) word.selectList()
+                        .stream()
+                        .filter(leaf -> leaf.toString().charAt(0) == (symbol))
+                        .count())
+                .sum();
+
     }
 
-    public String sortLexemesBySymbolQuantity(TextDataComponent component, char symbol) {
+    public String sortLexemesInSentencesBySymbolQuantity(TextDataComponent component, char symbol) {
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
-            ArrayList<TextDataComponent> temp = new ArrayList<>();
-            temp.addAll(component.selectList());
+            ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
             logger.debug(temp);
             for (int i = 0; i < temp.size(); i++) {
                 TextDataComponent lexeme = temp.get(i);
                 int k = countSymbolAppearance(lexeme, symbol);
                 Comparator<TextDataComponent> comparator;
-                comparator = Comparator.comparing(component1 -> k - CompositeAnalyzer.this.countSymbolAppearance(component1, symbol));
+                comparator = Comparator.comparing(comp -> k - CompositeAnalyzer.this.countSymbolAppearance(comp, symbol));
                 comparator = comparator.thenComparing(Object::toString);
                 temp.sort(comparator);
             }
@@ -90,13 +85,14 @@ public class CompositeAnalyzer {
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
 
-                stringBuffer.append(sortLexemesBySymbolQuantity(component.getChild(i), symbol));
+                stringBuffer.append(sortLexemesInSentencesBySymbolQuantity(component.getChild(i), symbol));
             }
         }
         return stringBuffer.toString();
     }
 
-    private TreeMap<TextDataComponent, Integer> createSymbolInLexemesMap(TextDataComponent component, char symbol) {
+    //returns the map of all lexemes as key and number of symbol appearance as value
+    private TreeMap<TextDataComponent, Integer> createSymbolQuantityInLexemesMap(TextDataComponent component, char symbol) {
         TreeMap<TextDataComponent, Integer> textMap = new TreeMap<>();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>();
@@ -112,28 +108,27 @@ public class CompositeAnalyzer {
             return lexemeMap;
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
-                textMap.putAll(createSymbolInLexemesMap(component.getChild(i), symbol));
+                textMap.putAll(createSymbolQuantityInLexemesMap(component.getChild(i), symbol));
             }
         }
         return textMap;
     }
 
-    public String sortTextLexemesBySymbolQuantityThenAlfabetically(TextDataComponent component, char symbol) {
-        StringBuffer stringBuffer = new StringBuffer();
-        TreeMap<TextDataComponent, Integer> lexemeMap = createSymbolInLexemesMap(component, symbol);
-        NavigableMap<TextDataComponent,Integer> decendingMap = lexemeMap.descendingMap();
+    public String sortTextLexemesBySymbolQuantityThenAlphabetically(TextDataComponent component, char symbol) {
+        // We are getting the map of all lexemes as a key and number of symbol appearance as a value
+        TreeMap<TextDataComponent, Integer> lexemeMap = createSymbolQuantityInLexemesMap(component, symbol);
+
+        // We are converting map to the list of lexemes, and sort it by symbol appearance, using map value,
+        // then descending order, then reverse list to get ascending order
         LinkedList<TextDataComponent> keyList = new LinkedList<>();
-        decendingMap.forEach((TextDataComponent k,Integer v)->{
-           keyList.add(k);
-        });
-        keyList.sort(Comparator.comparing(decendingMap::get).thenComparing(Comparator.comparing(Object::toString)));
+        lexemeMap.forEach((TextDataComponent k, Integer v) -> keyList.add(k));
+        keyList.sort(Comparator.comparing(lexemeMap::get).thenComparing(Comparator.comparing(Object::toString)));
         Collections.reverse(keyList);
-        for (TextDataComponent lexeme: keyList
-             ) {
-            stringBuffer.append(lexeme + " ");
-        }
-        logger.info(stringBuffer);
-        return stringBuffer.toString();
+        return keyList.stream()
+                .map(TextDataComponent::toString)
+                .collect(Collectors.joining(" "));
+
+
     }
 }
 
