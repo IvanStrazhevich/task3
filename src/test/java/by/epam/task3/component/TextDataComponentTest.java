@@ -1,5 +1,6 @@
 package by.epam.task3.component;
 
+import by.epam.task3.composite.TextDataComponent;
 import by.epam.task3.composite.TextDataComposite;
 import by.epam.task3.parser.ParserToText;
 import by.epam.task3.parser.SourceParsable;
@@ -13,7 +14,7 @@ import org.testng.annotations.Test;
 
 public class TextDataComponentTest {
     private SourceReader reader;
-    private SourceParsable parser;
+    private SourceParsable<String,TextDataComponent> parser;
     private TextDataComposite textDataComponent;
     private static Logger logger;
     private static final String SOME_TEXT = "Some text.";
@@ -24,7 +25,7 @@ public class TextDataComponentTest {
         logger = LogManager.getLogger();
         reader = new SourceReader();
         parser = new ParserToText();
-        textDataComponent = (TextDataComposite) parser.parseText(reader.readSource("data/data.txt"));
+        textDataComponent =  (TextDataComposite) parser.parseText(reader.readSource("data/data.txt"));
     }
 
     @AfterMethod
@@ -47,7 +48,7 @@ public class TextDataComponentTest {
     @Test
     public void testAdd() {
         String expected = textDataComponent.toString() + " Some text.";
-        textDataComponent.add((TextDataComposite) parser.parseText(SOME_TEXT));
+        textDataComponent.add(parser.parseText(SOME_TEXT));
         String actual = textDataComponent.toString();
         Assert.assertEquals(actual, expected);
     }
@@ -56,9 +57,9 @@ public class TextDataComponentTest {
     public void testRemove() {
         String expected = textDataComponent.toString();
         logger.info("before adding" + textDataComponent);
-        textDataComponent.add((TextDataComposite) parser.parseText(SOME_TEXT));
+        textDataComponent.add(parser.parseText(SOME_TEXT));
         logger.info("after adding" + textDataComponent);
-        textDataComponent.remove((TextDataComposite) parser.parseText(SOME_TEXT));
+        textDataComponent.remove(parser.parseText(SOME_TEXT));
         logger.info("after deleting" + textDataComponent);
         String actual = textDataComponent.toString();
         Assert.assertEquals(actual, expected);

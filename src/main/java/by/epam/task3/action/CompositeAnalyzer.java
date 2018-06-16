@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 public class CompositeAnalyzer {
     private static Logger logger = LogManager.getLogger();
 
-    public String sortParagraphsBySentenceLength(TextDataComponent component) {
+    public String showSortedParagraphsBySentenceLength(TextDataComponent component) {
         return component.selectList().stream()
                 .sorted((o1, o2) -> o2.selectList().size() - o1.selectList().size())
                 .map(Object::toString)
                 .collect(Collectors.joining(" "));
     }
 
-    public String sortSentencesByLexemeSize(TextDataComponent component) {
+    public String showSortedSentencesByLexemeSize(TextDataComponent component) {
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
             return component.selectList().stream()
@@ -28,13 +28,13 @@ public class CompositeAnalyzer {
                     .collect(Collectors.joining(" "));
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
-                stringBuffer.append(sortSentencesByLexemeSize(component.getChild(i)));
+                stringBuffer.append(showSortedSentencesByLexemeSize(component.getChild(i)));
             }
         }
         return stringBuffer.toString();
     }
 
-    public String sortSentencesByWordSize(TextDataComponent component) {
+    public String showSortedSentencesByWordSize(TextDataComponent component) {
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
@@ -49,7 +49,7 @@ public class CompositeAnalyzer {
                     .collect(Collectors.joining(" "));
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
-                stringBuffer.append(sortSentencesByWordSize(component.getChild(i)));
+                stringBuffer.append(showSortedSentencesByWordSize(component.getChild(i)));
             }
         }
         return stringBuffer.toString();
@@ -62,10 +62,9 @@ public class CompositeAnalyzer {
                         .filter(leaf -> leaf.toString().charAt(0) == (symbol))
                         .count())
                 .sum();
-
     }
 
-    public String sortLexemesInSentencesBySymbolQuantity(TextDataComponent component, char symbol) {
+    public String showSortedLexemesInSentencesBySymbolQuantity(TextDataComponent component, char symbol) {
         StringBuffer stringBuffer = new StringBuffer();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
             ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
@@ -85,23 +84,21 @@ public class CompositeAnalyzer {
         } else {
             for (int i = 0; i < component.selectList().size(); i++) {
 
-                stringBuffer.append(sortLexemesInSentencesBySymbolQuantity(component.getChild(i), symbol));
+                stringBuffer.append(showSortedLexemesInSentencesBySymbolQuantity(component.getChild(i), symbol));
             }
         }
         return stringBuffer.toString();
     }
 
-    //returns the map of all lexemes as key and number of symbol appearance as value
+    //returns the map of all lexemes as a key and number of symbol appearance as a value
     private TreeMap<TextDataComponent, Integer> createSymbolQuantityInLexemesMap(TextDataComponent component, char symbol) {
         TreeMap<TextDataComponent, Integer> textMap = new TreeMap<>();
         if (component.checkLevel().equals(DataLevel.LEXEME)) {
-            ArrayList<TextDataComponent> temp = new ArrayList<>();
-            temp.addAll(component.selectList());
+            ArrayList<TextDataComponent> temp = new ArrayList<>(component.selectList());
             logger.debug(temp);
-            int k = 0;
             TreeMap<TextDataComponent, Integer> lexemeMap = new TreeMap<>();
             for (TextDataComponent lexeme : temp) {
-                k = countSymbolAppearance(lexeme, symbol);
+                int k = countSymbolAppearance(lexeme, symbol);
                 lexemeMap.put(lexeme, k);
             }
             logger.debug(temp);
@@ -127,8 +124,6 @@ public class CompositeAnalyzer {
         return keyList.stream()
                 .map(TextDataComponent::toString)
                 .collect(Collectors.joining(" "));
-
-
     }
 }
 

@@ -7,7 +7,7 @@ import org.testng.annotations.*;
 
 public class LexemeInterpreterTest {
     private Logger logger;
-    private static LexemeInterpreter lexemeInterpreter;
+    private LexemeInterpreter lexemeInterpreter;
 
     @DataProvider
     public Object[][] interpretLexeme() {

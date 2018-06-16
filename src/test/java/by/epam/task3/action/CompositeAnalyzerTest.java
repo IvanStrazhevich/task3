@@ -40,39 +40,39 @@ public class CompositeAnalyzerTest {
     }
 
     @Test
-    public void testSortParagraphsBySentenceNumber() {
-        String actual = analyzer.sortParagraphsBySentenceLength(textDataComponent);
+    public void testShowSortedParagraphsBySentenceNumber() {
+        String actual = analyzer.showSortedParagraphsBySentenceLength(textDataComponent);
         logger.info("Actual sort paragraphs by sentence quantity: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
-    public void testSortSentencesByLexemesSize() {
-        String actual = analyzer.sortSentencesByLexemeSize(textDataComponent);
+    public void testShowSortedSentencesByLexemesSize() {
+        String actual = analyzer.showSortedSentencesByLexemeSize(textDataComponent);
         logger.info("Actual sort lexemes in sentence by length: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
-    public void testSortSentencesByWordSize() {
-        String actual = analyzer.sortSentencesByWordSize(textDataComponent);
+    public void testShowSortedSentencesByWordSize() {
+        String actual = analyzer.showSortedSentencesByWordSize(textDataComponent);
         logger.info("Actual sort words in sentence by length: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
-    public void testSortLexemesBySymbolQuantity() {
-        String actual = analyzer.sortLexemesInSentencesBySymbolQuantity(textDataComponent, SYMBOL);
+    public void testShowSortedLexemesBySymbolQuantityInTextBySentences() {
+        String actual = analyzer.showSortedLexemesInSentencesBySymbolQuantity(textDataComponent, SYMBOL);
         logger.info("Actual sort lexemes in sentences by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);
     }
 
     @Test
-    public void testSortUsingMapLexemesBySymbolQuantity() {
+    public void testShowSortedLexemesBySymbolQuantityInText() {
         String actual = analyzer.sortTextLexemesBySymbolQuantityThenAlphabetically(textDataComponent, SYMBOL);
         logger.info("Actual sort text lexemes by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
