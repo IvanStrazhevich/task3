@@ -9,8 +9,9 @@ import java.util.regex.Pattern;
 
 
 public class ParserToChars implements SourceParsable<String, TextDataComponent> {
-    private static Logger logger = LogManager.getLogger();
     private static final String PUNCT = "\\p{Punct}+";
+    private static Logger logger = LogManager.getLogger();
+
 
     @Override
     public TextDataComponent parseText(String data) {

@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 public class ParserToParagraph implements SourceParsable<String,TextDataComponent> {
     private static Logger logger = LogManager.getLogger();
-    private SourceParsable<String,TextDataComponent> nextParser = new ParserToSentences();
     private static final String PARAGRAPH_REGEX = "(?=\\s{4}.*)";
+    private SourceParsable<String,TextDataComponent> nextParser = new ParserToSentences();
 
     @Override
     public TextDataComponent parseText(String data) {

@@ -10,9 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParserToLexemes implements SourceParsable<String, TextDataComponent> {
-    private static Logger logger = LogManager.getLogger();
     private static final String LEXEME_DIVIDER = "(?>\\s)";
     private static final String NOT_WORD = "(\\p{Punct}*?\\d+?\\p{Punct}*?)+?\\s*";
+    private static Logger logger = LogManager.getLogger();
     private SourceParsable<String, TextDataComponent> nextParser = new ParserToWords();
     private LexemeInterpreter interpreter = new LexemeInterpreter();
 

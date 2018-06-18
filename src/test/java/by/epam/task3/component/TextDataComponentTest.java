@@ -13,11 +13,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TextDataComponentTest {
-    private SourceReader reader;
-    private SourceParsable<String,TextDataComponent> parser;
-    private TextDataComposite textDataComponent;
-    private static Logger logger;
     private static final String SOME_TEXT = "Some text.";
+    private static Logger logger;
+    private SourceReader reader;
+    private SourceParsable<String, TextDataComponent> parser;
+    private TextDataComposite textDataComponent;
 
 
     @BeforeMethod
@@ -25,7 +25,7 @@ public class TextDataComponentTest {
         logger = LogManager.getLogger();
         reader = new SourceReader();
         parser = new ParserToText();
-        textDataComponent =  (TextDataComposite) parser.parseText(reader.readSource("data/data.txt"));
+        textDataComponent = (TextDataComposite) parser.parseText(reader.readSource("data/data.txt"));
     }
 
     @AfterMethod
@@ -66,7 +66,7 @@ public class TextDataComponentTest {
     }
 
     @Test
-    public void testGetChild(){
+    public void testGetChild() {
         String expected = (textDataComponent.getChild(0).getChild(0).getChild(0).getChild(4).toString());
         String actual = "It";
         Assert.assertEquals(actual, expected);

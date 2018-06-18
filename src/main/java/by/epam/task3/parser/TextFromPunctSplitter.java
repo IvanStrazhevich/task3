@@ -9,9 +9,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TextFromPunctSplitter {
-    private static Logger logger = LogManager.getLogger();
     private static final String OPERATION_DIVIDER = "(?=[…\\p{Punct}])";
     private static final String OPERATION = "(?<=[…\\p{Punct}])";
+    private static Logger logger = LogManager.getLogger();
+
 
     public static List<String> splitTextFromPuncts(String lexeme) {
         Pattern punctPattern = Pattern.compile(OPERATION_DIVIDER);

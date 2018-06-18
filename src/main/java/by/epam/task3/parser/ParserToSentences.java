@@ -7,9 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ParserToSentences implements SourceParsable<String,TextDataComponent> {
+    private static final String SENTENCE_REG = "(?<=[.?!…])";
     private static Logger logger = LogManager.getLogger();
     private SourceParsable<String,TextDataComponent> nextParser = new ParserToLexemes();
-    private static final String SENTENCE_REG = "(?<=[.?!…])";
+
 
     @Override
     public TextDataComponent parseText(String data) {

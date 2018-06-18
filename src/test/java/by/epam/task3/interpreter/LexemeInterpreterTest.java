@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class LexemeInterpreterTest {
-    private Logger logger;
+    private static Logger logger;
     private LexemeInterpreter lexemeInterpreter;
 
     @DataProvider

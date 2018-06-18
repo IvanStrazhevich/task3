@@ -30,7 +30,7 @@ public class CompositeAnalyzerTest {
     }
 
     @AfterMethod
-    public void tearDown() throws Exception {
+    public void tearDown() {
         reader = null;
         parser = null;
         textDataComponent = null;
@@ -73,7 +73,7 @@ public class CompositeAnalyzerTest {
 
     @Test
     public void testShowSortedLexemesBySymbolQuantityInText() {
-        String actual = analyzer.sortTextLexemesBySymbolQuantityThenAlphabetically(textDataComponent, SYMBOL);
+        String actual = analyzer.showTextLexemesSortedBySymbolQuantityThenAlphabetically(textDataComponent, SYMBOL);
         logger.info("Actual sort text lexemes by symbol " + SYMBOL + " appearance: " + actual);
         logger.debug("Source text:" + expected);
         Assert.assertNotEquals(actual, expected);

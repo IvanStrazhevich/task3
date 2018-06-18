@@ -111,7 +111,7 @@ public class CompositeAnalyzer {
         return textMap;
     }
 
-    public String sortTextLexemesBySymbolQuantityThenAlphabetically(TextDataComponent component, char symbol) {
+    public String showTextLexemesSortedBySymbolQuantityThenAlphabetically(TextDataComponent component, char symbol) {
         // We are getting the map of all lexemes as a key and number of symbol appearance as a value
         TreeMap<TextDataComponent, Integer> lexemeMap = createSymbolQuantityInLexemesMap(component, symbol);
 
