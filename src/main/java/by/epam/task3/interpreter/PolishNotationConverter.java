@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class PolishNotationConverter {
     private static Logger logger = LogManager.getLogger();
+
     private int checkPriority(String operation) throws CompositeHandleException {
         int priority = 0;
         switch (operation) {
